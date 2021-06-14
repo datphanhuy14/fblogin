@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div style="width:500px;height:180px;">
+    <h2 style="font-size:40px;">Welcome! Please log in.</h2>
+    <a href="/auth/facebook">Login with Facebook</a>
+    </div>
+
+{% block js %}
+  <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{your-app-id}',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{api-version}'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+{% endblock %}
+{% endblock %}
