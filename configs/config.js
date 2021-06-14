@@ -1,5 +1,5 @@
 module.exports={
-    "clientID"      :     "1076951622832991", 
-    "clientSecret"   :     "efac9b9f739df1d000d51194cbfe9a95",
-    "callback_url"      :     "http://localhost:3000/auth/facebook/callback"
+    "clientID"      :     "390622695655091", 
+    "clientSecret"   :     "3cd41cd20b2fa4e3a57d156a21eeea8e",
+    "callbackURL"      :     "/auth/facebook/callback"
   }

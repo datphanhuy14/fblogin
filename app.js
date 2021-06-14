@@ -13,25 +13,27 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-// Sử dụng FacebookStrategy cùng Passport.
-passport.use(new GoogleStrategy({
-  consumerKey: 'www.example.com',
-  consumerSecret: GOOGLE_CONSUMER_SECRET,
-  callbackURL: "http://127.0.0.1:3000/auth/google/callback"
+// Sử dụng FacebookStrategy cùng Passport-Fb 
+passport.use(new FacebookStrategy({
+  clientID: config.clientID,          
+  clientSecret: config.clientSecret,
+  callbackURL: config.callbackURL
 },
-function(token, tokenSecret, profile, cb) {
-  User.findOrCreate({ googleId: profile.id }, function (err, user) {
+function(profile, cb) {
+  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
     return cb(err, user);
   });
 }
 ));
+
+
+
 // view engine setup
 nunjucks.configure('views', {
   autoescape: true,
   express: app
 });
 app.set('view engine', 'html');
-
 
 // app.use(logger('dev'));
 app.use(express.json());
@@ -55,7 +57,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error');  
 });
 
 module.exports = app;
