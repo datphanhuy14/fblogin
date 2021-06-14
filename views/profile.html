@@ -1,6 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <p>USER</p>                     {# Check callback #}
-    {{ user }}
+    <div id="append"></div>
+{% endblock %}
+
+{% block js %}
+    <script>
+    var profile = `{{profile | dump | safe }}`;
+    profile = JSON.parse(profile)
+    console.log(profile);
+
+    </script>
 {% endblock %}

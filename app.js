@@ -3,17 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
 const nunjucks = require('nunjucks');
 const passport = require('passport');
 const FacebookStrategy  = require('passport-facebook').Strategy;
 const config = require('./configs/config');
+var disUser; 
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var app = express();
-
-
-
 
 // view engine setup
 nunjucks.configure('views', {
@@ -30,26 +30,42 @@ passport.use(new FacebookStrategy({
   profileFields: ['email','gender','locale','displayName']
 },
 function(accessToken, refreshToken, profile, cb) { 
-  console.log(profile);
+  // console.log(profile);
   return cb(null, profile);
 }
 ));
 
+// PASSPORT & session 
+app.use(session({secret:'zesvn88' , saveUninitialized : true, resave : true}));
+app.use(passport.initialize()); 
+app.use(passport.session());
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(user, cb) {
+  cb(null, user);
+});
+
 
 // app.use(logger('dev'));
+app.use(session({secret:'zesvn88' , saveUninitialized : true, resave : true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(function(req, res, next) {
+  next();
+}); 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-}); 
+
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -59,7 +75,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');  
+  res.render('error', {err : err.message});  
 });
 
 module.exports = app;
