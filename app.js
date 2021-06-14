@@ -26,10 +26,12 @@ app.set('view engine', 'html');
 passport.use(new FacebookStrategy({
   clientID: config.clientID,          
   clientSecret: config.clientSecret,
-  callbackURL: config.callbackURL
+  callbackURL: config.callbackURL,
+  profileFields: ['email','gender','locale','displayName']
 },
-(profile , done ) => {
+function(accessToken, refreshToken, profile, cb) { 
   console.log(profile);
+  return cb(null, profile);
 }
 ));
 
@@ -47,7 +49,7 @@ app.use('/users', usersRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
-});
+}); 
 
 // error handler
 app.use(function(err, req, res, next) {
