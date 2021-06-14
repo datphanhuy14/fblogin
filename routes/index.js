@@ -16,12 +16,12 @@ router.get('/login', function(req, res, next) {
 }) 
 //
 router.get('/auth/facebook',
-  passport.authenticate('facebook', ));
+  passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
-    // Successful authentication, redirect home.
+    // Successful authentication, redirect home. 
     res.redirect('/profile');
   });
 // );

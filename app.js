@@ -27,13 +27,14 @@ function(profile, cb) {
 ));
 
 
-
 // view engine setup
 nunjucks.configure('views', {
   autoescape: true,
   express: app
 });
 app.set('view engine', 'html');
+
+
 
 // app.use(logger('dev'));
 app.use(express.json());
