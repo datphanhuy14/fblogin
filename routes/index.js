@@ -16,7 +16,7 @@ router.get('/login', function(req, res, next) {
 }) 
 //
 router.get('/auth/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook', {scope : ['email']})); // Xin quyền cấp email từ fbscope , Scope: 
 
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', {successRedirect: '/profile', failureRedirect: '/login' }),
