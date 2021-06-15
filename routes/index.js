@@ -7,8 +7,7 @@ router.get("/", function (req, res, next) {
 });
 // PROFILE
 router.get("/profile", function (req, res, next) {
-  // profile = JSON.stringify(req.user._json);
-  res.render("profile.html", { profile: req.user._json});
+  res.render("profile.html", { profile:  req.user._json});
 });
 // Login
 router.get("/login", function (req, res, next) {
@@ -18,8 +17,7 @@ router.get("/login", function (req, res, next) {
 router.get(
   "/auth/facebook",
   passport.authenticate("facebook", { scope: ["email"] }) // Xin quyền cấp email từ fbscope , Scope:
-); 
-
+);
 router.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", {

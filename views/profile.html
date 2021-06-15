@@ -8,7 +8,6 @@
     <script>
     var profile = `{{profile | dump | safe }}`;
     profile = JSON.parse(profile)
-    console.log(profile);
     $(document).ready(function(){ 
     $("#append").append(`<h3>Name:${profile.name} </h3> <p> Email : ${profile.email} </p> <p> UID : ${profile.id} </p> 
     `)

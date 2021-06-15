@@ -6,12 +6,9 @@ var logger = require('morgan');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const passport = require('passport');
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var app = express();
-
 // view engine setup
 nunjucks.configure('views', {
   autoescape: true,
@@ -20,7 +17,7 @@ nunjucks.configure('views', {
 app.set('view engine', 'html');
 
 // Passport & Session 
-app.use(session({secret:'zesvn88' , saveUninitialized : true, resave : true}));
+app.use(session({secret:'zesvn88' , saveUninitialized : false, resave : true}));
 app.use(passport.initialize()); 
 app.use(passport.session());
 
@@ -33,14 +30,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use(function(req, res, next) {
-  next();
-}); 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-
-// catch 404 and forward to error handler
 
 
 // error handler
