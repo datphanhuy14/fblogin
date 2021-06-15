@@ -18,7 +18,7 @@ router.get('/login', function(req, res, next) {
   res.render('login.html')
   
 }) 
-//
+// FB Login
 router.get('/auth/facebook',
   passport.authenticate('facebook', {scope : ['email']})); // Xin quyền cấp email từ fbscope , Scope: 
 
@@ -28,4 +28,16 @@ router.get('/auth/facebook/callback',
         res.redirect('/profile');
       }
   );
+  // Google login
+  router.get('/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email']
+  }));
+
+  router.get('/auth/google/callback',
+    passport.authenticate('google', {successRedirect: '/profile' , failureRedirect : '/login'}),
+    (req, res) => {
+      res.redirect('/profile');
+    }
+  );
+
 module.exports = router;

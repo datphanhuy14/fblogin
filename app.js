@@ -6,9 +6,9 @@ var logger = require('morgan');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const passport = require('passport');
-const FacebookStrategy  = require('passport-facebook').Strategy;
-const config = require('./configs/config');
-var disUser; 
+
+
+
 
 
 var indexRouter = require('./routes/index');
@@ -22,35 +22,14 @@ nunjucks.configure('views', {
 });
 app.set('view engine', 'html');
 
-// Sử dụng FacebookStrategy cùng Passport-Fb 
-passport.use(new FacebookStrategy({
-  clientID: config.clientID,          
-  clientSecret: config.clientSecret,
-  callbackURL: config.callbackURL,
-  profileFields: ['email','gender','locale','displayName']
-},
-function(accessToken, refreshToken, profile, cb) { 
-  // console.log(profile);
-  return cb(null, profile);
-}
-));
-
-// PASSPORT & session 
+// Passport & Session 
 app.use(session({secret:'zesvn88' , saveUninitialized : true, resave : true}));
 app.use(passport.initialize()); 
 app.use(passport.session());
 
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
-
-passport.deserializeUser(function(user, cb) {
-  cb(null, user);
-});
-
+require('./passport');  // Import Passport 
 
 // app.use(logger('dev'));
-app.use(session({secret:'zesvn88' , saveUninitialized : true, resave : true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
